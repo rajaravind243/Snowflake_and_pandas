@@ -1,0 +1,249 @@
+In a typical data warehousing environment, we're bringing in data from our various source applications into the data warehouse or data mart, and we use a data flow technique called ETL.
+ETL stands for either extract, transform & load or  extraction, transformation and loading .
+Extract: 
+    Quickly pull the data from various source applications 
+    traditionally done in batches.
+        maybe it's every hour, every week in the old days, maybe it's every five minutes, every day.
+        various intervals for ETL will do so typically in various batches.
+        that's why ETL is known as a batch oriented data flow process.
+    Raw data...errors and all 
+        when we get the data out, typically, we're going to bring it in into the data warehousing environment, raw as in a raw form.
+        So basically errors and all.
+        And we'll eventually patch up the errors and we'll look at ways we do that.
+    Land in DW staging layer 
+        Remember that ETL brings the data in, not directly into the place where users are going to access it for their BI and analytics, 
+        but rather into a staging layer.
+once we've done that, we then switch over to the transformation 
+
+Transformation : 
+    apples to apples comparisons.
+    prepare for uniform data in user access layer
+        we're going to be bringing in data from different sources.
+        even though they might have the same function or have similar data, they might actually be stored and represented differently.
+        So products might have different data structures and different set ups. Same with customers and employees.
+        And they might be coming from multiple sources around the enterprise.
+        What we need to do within the transformation phase of ETL is prepare the data, turn it as uniform as possible before it's loaded into 
+        the user access layer.
+    Transformation can be very complex.
+        different transformations that you almost certainly will be doing for data warehousing.
+        
+Load : 
+    Final stop along the data pathway 
+        once we're done with the transformations, we're ready to loaded into the user access layer. So that's this is the final stop. 
+    Store uniform data in user access layer 
+        we're going to store uniform data and make it available as soon as we're done for BI and analytics.
+
+Challenges with traditional ETL : 
+    Significant business analysis before storing data 
+        There's a lot of challenges with traditional ETL.
+        Probably the most significant one is that you need to do significant business analysis before you store your data.
+    Significant data modeling before storing data 
+        essentially, you also need to do significant data modeling before you store your data.
+        There's a lot of preparatory analytical work that needs to happen before you pull data out of one or more systems 
+        and then loaded into your Target Data Warehouse or Datamart Environment.
+
+ETL --> ELT : 
+------------------
+Now, from around 2015 , especially with big data and data lakes, we just flip the order around (from ETL -> ELT )
+So instead of 
+        ETL - extract and transform and then load   flip the order around 
+        ELT - extract the data, load it first before you do any transformations and then do the transformations later on when need them.
+ELT : 
+    "Blast" data into big data env 
+        So when we talk about ELT rather than ETL, what we're really blasting the data from the various source applications and external data sources 
+        into some type of a big data environment. 
+    Raw form in Hadoop HDFS, AWS S3, etc 
+        Typically with ELT will bring in the raw form of the data, whether it's structured or unstructured or semi structured 
+        we will bring it into Hadoop, the Hadoop distributed file system, or AWS S3 buckets or some sort of low level storage that we basically don't 
+        really care about the actual format at that point, because with the ELT paradigm, we don't need to do all of that upfront data modeling and 
+        data analysis. We can just blast the data in, store it as is, and then do the analysis later on when we're ready for transformation 
+        and making the data available for BI and analytics purposes.
+    Use big data env computing power to transform when needed 
+        Instead of using the ETL servers, which tend to be kind of commodity servers along the way
+        Once the data is in a big data environment, we can go ahead and use all of the computing power there to handle the transformations.
+        especially when you're dealing with incredibly large volumes of data, big data env really helps the overall performance in your environments.
+    "Schema on read" vs "Scheman on write" 
+        The whole idea with "schema on write" means, at the point that you create the data and make it available for analytical usage, 
+        the schema, the structure for that data has already been set, so the schema is there, then you write the data.
+        Conversely, with ELT, because you are blasting the data into HDFS or S3 or some sort of a lower level storage bucket, 
+        you can defer creating the schema.So that's all the analysis and data modeling that you need to do.
+        Defer it until you're ready to make the data available for analytical usage somewhere down the road, 
+        But not necessarily when you're first ingesting the data.
+
+So if you're building just a traditional data warehouse with cubes or relational databases, no big data technology, pretty much you're going to stick 
+with the ETL paradigm unless there's certain environments that may want you to do an ELT approach rather than ETL.
+But typically with traditional data warehousing, we're still doing ETL.
+
+If you're building a data lake instead or some sort of a data warehouse data like hybrid, that's where
+you're more likely to be embarking(onboarding) on the ELT path
+
+Two different varieties of ETL : 
+    Initial ETL
+    Incremental ETL
+Initial ETL : 
+================================
+    Normally, one time only 
+        it's normally something that you do one time only 
+    Right before the data warehouse goes live.
+        You basically corral all the data that you're going to need to get the data warehouse up and running, get it into the staging area, 
+        get it all transformed and then loaded into the user access layer and  then presto, you're ready for the data warehouse to go live.
+    All relevant data necessary for BI and analytics 
+        You bringing in all of the relevant data that's going to be necessary for your BI and analytics that will be supported by the DW.
+    Redo if data warehouse "blows up" 
+        You could wind up re-doing the initial ETL later on, even though it's not really intended for more than the initial setup of the DW
+        for instance, the data warehouse blows up or gets corrupted or maybe gets replatformed, you might need to go ahead and redo the initial ETL 
+        But typically
+
+Data relevance : 
+    the key word for bringing in data is relevance.
+    In a data warehousing environment, you do not bring in all possible source data 
+    In a big data environment, In theory, you can do that by blasting in data from all your different data sources.
+    But in data warehousing, that is not something that we can go ahead and do.
+    What you want to do is bring in the relevant data.
+    relevant data means that we want the data that absolutely, definitely, positively will be needed for BI and analytics.
+
+What to bring into data warehouse : 
+    Data definitely needed for BI and analytics 
+        How to find the needed data means 
+        we know there are certain reports and certain standard visualizations that we do and make use of.
+        We know the underlying data for those reports and visualizations.
+        Absolutely we will bring in that data when we go ahead and get the data warehouse up and running.
+    Data probably needed for BI and analytics
+        We also are going to bring in data that we probably will wind up using for BI and analytics.
+        So usually if you're going to be doing a certain portfolio of the eye and visualizations and data mining and predictive analytics, 
+        there's closely related data that might not necessarily be on the current sets of things that you want to bring up from the very beginning.
+        But there's a really good chance it's going to be needed before long.
+        So there's usually what you wind up doing is bringing the data in. That's probably going to be needed as part of your initial ETL as well.
+    Historical data 
+        You also probably will wind up bringing in historical data.
+        You certainly will keep the data warehouse up to date through the incremental ETL.
+        But remember, when that data warehouse is first getting up and running, there is no historical data and the very nature of data warehousing 
+        typically takes us down business intelligence and visualizations and other reporting that requires historical data.
+        So there's a really good chance that when you're first getting a data warehouse up and running, historical data is going to come in as well.
+
+And then at that point, once you're you want your initial ETL is is completed, you are ready to go and you'll still need to keep the data warehouse up to date. And that's where the incremental com
+
+Incremental ETL: 
+=======================
+    Incremantally refreshes the data warehouse 
+        unlike initial ETL, incremental ETL, is something that we'll do on a regular basis.
+        we incrementally refresh the data warehouse and keep it up to date 
+    New data : employees, customers, products.....
+        will bring in new data so new employees, new customers, new products, new faculty members, new students, 
+        anything that's new for the subject areas that we're storing in our data warehouse 
+    Modified data : employee promotions, product price change......
+        we will also bring in information about modify data.
+        So if an employee or a faculty member gets promoted, maybe we change the price on a product or change the title of a university class, 
+        whatever it happens to be. We'll go ahead and bring in the modifications as well.
+    Special handling for deleted data : Customer drops from a subscription plan,....
+        We'll also take care of the deleted data, but not necessarily deleting it, as you might presume, from data that's being deleted.
+        For ex, if a customer drops from some sort of a prescription plan or a student drops out of college or a faculty member resigns, 
+        then you're not going to purge that information from the DW, we'll typically want to keep that around for historical reporting purposes.
+        But at the same time, we will want to reflect that a faculty member is no longer active, a students no longer enrolled, or a customer is no longer a customer.
+
+Bring the DW upto date  : 
+    Now, the purpose of the incremental ETL is to make sure that the data warehouse is up to date.
+    Remember that one of the key principles, one of the original rules of data warehousing, is non-volatile (no need to be live)
+    So, in between ETL runs, the data warehouse is static, i.e the data is not changing when we're trying to do strategic planning and other things 
+    that we use the data warehouse for.
+    But at the same time, in between ETL runs the data is getting a little stale.
+    So we need to make sure that periodically we bring the data warehouse up to date with the most current information.
+    
+These below 4 major incremental ETL patterns helps to keep DW upto date. (refer word / pdf) 
+4 patterns helps to bring the data warehouse up to date : 
+-----------------------------------------------------------
+    1. Append : 
+        In this ETL pattern, Appending new data to existing data whatever in data warehouse.
+    2.In-place update : 
+        In this pattern you are changing data in the existing rows of data. 
+        Lets say particular table has 10000 data then after ETL also that table will have 10000 data with some rows affected 
+    3.Complete replacement : 
+        Even a small piece of data need to be changed or added, you are going to do complete replacement
+    4.Rolling Append : 
+        like maintaining last 10 years of record. 
+        So when there is  entry for this week some entries which is made 10 years before deleted in parallel
+
+Now, those are the four patterns that we've used in data warehousing for a long time.
+If you look at ETL today almost all DW is going to be either 
+    append  
+    in-place update,
+    
+T - for Transformation : 
+==============================
+
+data transformation as a key aspect of ETL, which in turn is a key way in getting our data warehouses built and up and running.
+Remember again that ETL stands for Extract, Transform and Load.
+And that middle layer that T for transformer transformation is really one of the key parts of getting a data warehouse Functional.
+data transformation actually has two overarching goals.
+    uniformity
+        Regardless of how many different applications and platforms and software packages our data is coming from 
+        if we have data for our products, our faculty members, our students,our customers, employees, whatever they happen to be from different 
+        systems that should look alike to build our data warehouse. 
+        we need to transform that data so we have apples to apples comparisons between the data.
+        So it's then uniform for purposes of our BI and analytics that will run on top of the data warehouse.
+    restructuring
+        Think of it as we pull in all this data to  our stage layer.
+        And remember, in our staging layer, we're bringing data in in relatively raw form.
+        Think of it as throwing that data up in the air and having it come down into a very well engineered set of data structures.
+
+we have a number of different transformation models.
+    Data value unification 
+    Data type & size unification
+    De-duplication 
+    Dropping columns (vertical slicing) 
+    Value based row filtering (Horizontal slicing)
+    Correcting known errors 
+
+Data value unification  : (refer pdf pic)
+    The first one is data value unification.
+    for example, two different campuses, each with their own set of systems as part of the same university.
+    campus one a new faculty management system with five new professors joining at the faculty ranks at the beginning of a semester.
+    And over in campus two, we have four brand new faculty members as well.
+    In campus 1 we are using rank as  professor, assistant professor, associate professor, lecturer, or whatever 
+    But in campus 2 it uses just one or two letters, P for professor, AP four assistant professor, L for lecturer..
+    Now, remember, one of the goals of transformation is when we're presenting data to our users, they shouldn't care about where the data came from 
+    and what the respective data structures and business rules that might have been in the source systems.
+    They want a relatively effortless set of data. That's one of the key goals of data warehousing.
+    So, we need to unify those data values.You've got to choose one(P) or the other(Professor). You're not going to choose both.
+    Consider as per data modelling, We will store the rank the way that the campus 2 system did with the one or two letters.
+    So, in the actual campus one systems, their full titles were either spelled out or abbreviated.
+    Now, they've been transformed to the equivalent of one or two letter abbreviation for whatever their rank faculty rank happens to be.
+    So we've essentially unified the data values.
+
+Data type and size unification :    
+    So on the campus 1 system you'll notice that that last name is a is 35, first name as a string of 20 characters and the rank is 20 characters.
+    Notice on the campus two system, which was a separate piece of software. last name is 30 characters, the first name is 25 char and the rank is 
+    three characters. 
+    Same as with the value unification. We can't or don't want to present the users with two different tables, 
+    with different data types and sizes for what essentially is the same type of data.
+    So We're going to unify the the type and size for the data, so we're going to select the larger of the fields.
+    As per campus 1, 35 char used for first name and 
+    25 char will use for the last name because the campus 2 faculty system has 25 characters for the first name.
+    And then we decided again we're going to abbreviate the rank to the one or two letters or maybe up to three letters (Associate Professor-AP)
+    so you don't always have to go with the higher values we just happened to for the first name & the last name in this case.
+    But, whatever you do, you want to unify the data types and data sizes, regardless of the sources 
+
+De-duplication : 
+    campus 1 : Sally Jackson, Richard Thompson and Greta Williams
+    campus 2 : Greta Williams and Ted Young
+    let's just say Greta Williams is taking classes on both campuses.
+    And the way we're set up is Greta Williams needs to register on both of the campuses with their respective systems.
+    Well, within the data warehouse, What we need to do is make sure that we're not double counting Greta Williams or putting Greta in there twice, 
+    because that would kind of mess up the way we would do our analytics and our reporting.
+    So, what we do is, we detect the fact that Gretta Williams shows up into two different systems.
+    But really, Gretta Williams represents only one student, maybe by Social Security number, campus student number, whatever it happens to be.
+    So when we store, the new students will store Sally Jackson and Richard Thompson and Ted Young, and
+    we'll also store only one copy of Gretta Williams.
+
+Dropping columns (vertical slicing) : 
+    Some column values from source, we never used it for analytical purpose. those column values dont need to be pull into DW. 
+    Here, for our purposes, we don't need whatever Column X and column Y are, whatever the values happen to be. 
+    We've decided for whatever reason we don't necessarily want to bring that columns into our data warehouse 
+    because we're never going to be using it for analytical purposes.
+    So vertically slice the data, will get rid of column X and column  Y, not as part of source systems themselves, 
+    but as part of the ETL. We slice it while loading
+
+Value based row filtering (Horizontal slicing):
+    source system table can be hold data for multiple modules, but if we are building data warehouse only to some of the important modules 
+    then we will make a filter to choose only those data (filter based on value)
+    As we are going to design Data mart only for Business, we don’t need the remaining extra info. In business aspect we are filtering this.

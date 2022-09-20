@@ -1,0 +1,26 @@
+Reasons that we invest the time, resources and money into building a data warehouse.
+1. Making data - driven decisions 
+    -- To support making decisions in a data driven manner rather than having to rely solely on experience and intuition and even hunches.
+2. One stop shopping.  
+    -- the data that we need is all in a single location rather than scattered among the transactional and operational applications where we get    
+       that data from 
+1. Making data - driven decisions 
+    For making data driven decisions. Ideally, we need a view into 
+        -- the past, 
+        -- the present and
+        -- the future or what we believe the future will likely be (with regards to various areas of our organizations)
+        -- the Unknown (We also even need a view into the unknown)
+    By powerful analytics we will get some interesting and important infor from all of this data.
+    Business intelligence and data warehousing both came onto the scene around the same time right around 1990 and provided tremendous synergy for
+    each other.
+    Arguably, B.I helped to make data warehousing extremely popular and data warehousing helped do the same for B.I.
+2. One stop shopping
+    back before data warehouses (one stop shopping) came onto the scene.
+      -- Any attempted data driven decision making require going after data, either in the original applications themselves or in what we call 
+         extract files that drew data from one or perhaps a couple of those applications.
+      -- But for the most part, data driven decision making back in the old days was incredibly tedious and problematic 
+         because of the data we needed being scattered all over the place.
+    With data warehousing, though, we integrate all of the data into one place and provide the aforementioned one stop shopping.
+    So what we can do then is concentrate on the analysis of the data rather than repeatedly gathering and integrating the data over and over.
+    So again, we have business intelligence and data warehousing as sort of sibling disciplines that provide tremendous value to each other 
+    and to all of us who use data warehousing.

@@ -1,0 +1,112 @@
+basic reporting and online analytical processing, which are the two traditional usages of a data warehouse for bi purposes, 
+and both of which require or strongly encourage the data to be organized dimensionally.
+And the reason we do that is to be able to make data driven decisions by slicing, dicing, drilling up and down our data to different levels of abstraction, and dimensionally structured data is particularly well suited for that.
+So to do that, to make data driven decisions in a dimensional sense, requires two diffrent things.
+    1. one or more measurements.
+    2. Dimensional context for each measurement
+
+6644
+    So let's look at the number of 6644. We just don't know what kind of a measurement is that.
+    Is it a dollar figure?
+    Is it the number of feet or number of yards or number of inches of something?
+    We just don't know because there's a measurement, but there's no context, no sort of surrounding description to that.
+$6644
+    So let's throw a dollar sign in front of it. $6644
+    We've added a little more detail, but we don't know what that six thousand six hundred and sixty four dollars actually means.
+    Is that somebodies monthly salary, weekly salary, is that what just as a 
+    what they just paid for a new computer and printer for a holiday gift?
+    We don't know, because, again, there's no real context.
+payment $6644 
+    If we throw the word payment there, we're getting a little more detail.
+    But we don't know, Is that a payment that somebody made (or) a payment that somebody else is making to to a particular person?
+    And either way, what exactly is that payment for?
+    So, again, there's a measurement there, just not enough or not any dimensional context.
+    So the absence of context is a problem.
+
+So what we need to do then is for every measurement, as I mentioned a couple minutes ago, we need to make sure that we have enough context.
+
+So, provide dimensional context with either the word 
+    by (or) for.
+And let's look at some examples of that.
+So, first of all, we need to understand that we bring dimensional context to our measurements, and
+that gives us the data driven insights that we then can use for decision making in a business intelligence sense.
+So, so typical dimensional insight.
+
+So let's just look at these two relatively standard types of questions that we would ask from a data
+warehouse.
+And let's say for a university, what is the average annual faculty salary by rank, by department,
+by academic year?
+What is the average student loan balance by major by class, year by campus.
+So two and again, relatively ordinary questions.
+Let's decompose both of those first.
+You'll notice that the highlighted portions, average annual faculty salary, an average student loan
+balance.
+Those are perfect examples of what we mean by a measurement.
+There's something quantifiable that we're actually measuring.
+But notice, we need to still provide some dimensional context because we don't know is that an average
+annual faculty salary for everybody, for certain ranks, only for certain departments or certain colleges
+only.
+So we need to provide some dimensional context, and that's where these highlighted portions come into
+play.
+So for the average annual faculty salary, we want it broken down.
+Yes, we want everybody, but we want it broken down by rank.
+We want it broken down by departments, and we also want it broken down by academic year.
+Then refer the average student loan balance.
+We want that broken down by major by class year and by campus.
+Those are good examples of what we mean by dimensional context.
+Now, notice, here's two other questions are two similar questions or related questions that are slightly
+different.
+And you'll notice in this case, we want the average annual faculty salary, but only for assistant
+professors, and then broken down by department by academic year.
+And then likewise, we'd like to see the average student loan balance, but only for engineering majors,
+but still broken down by class, year by campus.
+So you'll notice here and these two questions, we have the word for showing up at once rather than
+the word by the.
+Horton thing is, when you see the word by both the words by and for are used to provide dimensional
+context, the word by almost always, and we're going to see an example of where it's different.
+But it almost always means that, hey, I want every possible value of a particular dimension, but
+I'd like you to slice ingroup bits and then present me the results.
+Whereas the word for means I don't necessarily want everybody.
+I want to see one or more specific values from within the entire dimension.
+So in that in the two questions we just saw, we actually saw a mix.
+We saw very specific filtering of the faculty only for certain ranks and then for students only for
+certain major, but then broken down by campus and by academic year and by the other dimensions for
+each of the questions.
+Now, sometimes you're going to have a dimensionally oriented question that actually has some implied
+wording to look at this one.
+What is the average annual faculty salary this academic year for assistant professors by departments?
+Now, you'll notice before this academic year you don't see either a buy or a four.
+Well, the reality is you still have a dimensional context, but it's just an implied wording.
+Think about it like this.
+We are asking it for this academic year, for assistant professors by department, but we just haven't
+included the actual wording.
+So sometimes you need to look at the actual sentence, the actual statement.
+And this this wouldn't necessarily be in your school code or in your tableau or power by or MicroStrategy
+or or Cognos spy capabilities that you would use.
+But if you're phrasing out using just basic grammar, what a dimensional question happens to be.
+On occasion, you might have the four or the bi missing and then you need to apply what it actually
+is.
+And in this particular case, there's an implied four, which means we want to see the average annual
+faculty salary, but only for this academic year, not last academic year or next academic year.
+Coming up, if salaries are known specifically for this academic year, now, sometimes you're going
+to actually see the word by instead of four, even though we mean for.
+But it's being used for sort of grammatical reasons.
+So look at this question.
+What is the total number of vacation days taken last year by administration employees?
+Sounds like a nice, normal question you would ask, but notice last academic year, first of all,
+we haven't applied for there.
+So really we're we're missing the word for.
+But we need to filter that into only last academic year.
+But also notice by administration employees, we're actually really saying I want to see the total number
+of vacation days taken last academic year for only administration employees.
+Buy again normally implies the entire dimensioned, broken down and sliced in groups, whereas the four
+implies a filtering here.
+We're doing a filtering.
+We're just using the word BI because it sounds more natural.
+So every so often you need to take a closer look at it dimensionally oriented question for both implied
+wording and in this case, substitute wording.
+But either way they are dimensional questions that we're asking.
+The critical lesson here is that as we evolve from our architectural discussion into the nuts and bolts
+and the details of data warehousing and dimensional modeling, the fundamental point is that we still
+have to organize our data by measurements filtered and grouped and organized by context.
+If we do a good job at both of those, that gives us the insights we need to make data driven decisions

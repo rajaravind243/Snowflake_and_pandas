@@ -1,0 +1,38 @@
+A data warehouse is literally that a fairly large warehouse, but one that's filled with data rather than physical products.
+It's important to note that a data warehouse is not the same as a database, even though the name sound familiar, there is a relationship, though a data warehouse is typically built on top of some type of a database.
+So you can think of a data warehouse as the usage and the database as the platform.
+
+It's also important to note that the data inside of a data warehouse comes from elsewhere(our operational systems &  external sources)
+
+In other words, we don't create data for the first time in a data warehouse, as part of some type of a transaction.
+Ex like - buying something online or a student registering for a class or maybe a new faculty member being hired at a university.
+Those transactions occur and are recorded in various operational systems, and their data is then subsequently sent down to the data warehouse.
+
+Many data warehouses have dozens of data sources (the more sources, the more complex the overall environments) 
+Another critical point is that data is copied, not moved. In other words, the data remains in our source systems and then copies are made and sent into the data warehouse.
+
+DW rules : 
+A data warehouse is more than just a storage location for lots of data.
+Even though there are rules that govern how we build our data warehouses and how we organize and store our data.
+Way back in 1990, a gentleman named Bill Inmind came up with a set of rules for data warehousing,
+
+1.Integrated 
+  -- a data warehouse is an integrated environment.
+  -- i.e data from a number of different source systems are sent into a data warehouse.
+2. Subject oriented 
+  -- a data warehouse should be subject oriented regardless of how many systems and which data is coming from which systems.
+  -- We need to reorganize the data by subjects.
+3. Time variant 
+  -- our data warehouses contain historical data, not just current data.
+4. Non volatile
+  -- Traditionally, we will periodically load data into a data warehouse. Think of it as refreshing a data warehouse to keep it current.
+  -- And we do so in batches. i.e once a day will grab all of the new and updated data from source applications and copy that data into the data    
+     warehouse.
+  -- Non volatilile means - Even thousands/millions of transactions are occurring in our transactional systems, the data warehouse stays as is    
+     between the time of the last refresh and the next one.. That's what we mean by nonvolatile.
+5. Improvement
+  -- When we bring the data into the data warehouse we will typically restructure and reorganize it to make it more useful for analysis.
+
+Why do we even build these environments that are integrated, subject oriented time variants and nonvolatile and which pull data from our transactional systems?
+And the reason is to support the data driven decision making.
+

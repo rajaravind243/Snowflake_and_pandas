@@ -1,0 +1,288 @@
+Remember that a data warehouse is built by pulling data from other applications and systems, 
+applying labels to the picture We identify our data sources and also our data warehouse.
+
+      data source --> ETL --> Datawarehouse --> ETL --> data marts
+      (suppliers)             (wholesaler)              (retailer)   
+
+In between data sources and data warehouse, we have something called ETL, which is a critical aspect of data warehousing.
+ETL stands for extract, transform and load, or alternatively extraction, transformation and loading.
+Either of those two sets of words is acceptable and people tend to use them interchangeably.
+Sometimes we don't stop with pulling and copying data from our data sources into a data warehouse via ETL.
+Sometimes we will then continue to pool and copy the data again, sending it downstream into smaller environments that are typically referred to as data marts.
+
+Think of our data sources as suppliers, and the data warehouse is sort of a wholesaler that collects data from many different suppliers.
+In turn, smaller subsets of the data are sent into what we can think of as data retailers.
+This is where users do most or even all of their data shopping.
+
+Since the data marts have specific subsets tailored to different groups of users, perhaps those from
+a specific business organization or those that perform a given business function.
+
+Centralized data warehouse : 
+    single database 
+
+        With a centralized data warehouse, you have a single database, everything from all of your sources will feed into that single database.
+    one stop shopping 
+        The most obvious advantage of centralized data warehousing is the support for one stop shopping.
+        All the data that we need for reporting business intelligence and analytics is all together in a single place, sort of like a data supermarkets.
+        
+Data warehouse vs data marts 
+    data warehouse doesn't necessarily need to be the endpoint in the flow of data from our source applications into some sort of an analytical 
+    environment to support decision making. In some cases, data is sent further downstream into these additional environments that we typically
+    will call data marts.
+    
+Dependent data marts : 
+    data source  --> Datawarehouse --> Data marts
+     (suppliers)     (wholesaler)      (retailers)
+    here data marts are to draw their data out of the data warehouse. These are what are known as dependent data marts.
+    In other words, their very existence depends on the existence of a data warehouse. 
+    No data warehouse then no data marts, because they can't be supplied with data otherwise.
+    
+Independent data mart : 
+    data source  --> Data marts
+     (suppliers)     (retailers)
+    unlike a dependent datamart, an independent datamart doesn't need a data warehouse.
+    Instead, each independent data mart draws data directly from one or more source applications. 
+    you can think of an independent datamart as essentially a small scale data warehouse, with its data organized internally the same way.
+    
+Difference between Dependent & Independent data mart:
++------------------------------------------+-----------------------------------------------+
+| Dependent                                | Independent                                   |
++------------------------------------------+-----------------------------------------------+
+| Sourced from data warehouse              | sourced directly from applications & systems  |
++------------------------------------------+-----------------------------------------------+
+| (Mostly) Uniform data across data marts  | Little or no uniformity across marts          |
++------------------------------------------+-----------------------------------------------+
+| Architecturally straightforward          | "Spaghetti' architecture                      |
++------------------------------------------+-----------------------------------------------+
+
+In fact, if you think about an environment that's made up of dozens or even hundreds of independent data marts, you'll typically wind up with 
+somewhat of a spaghetti architecture with a ton of different lines of feeding data over and over from all the different source systems into those 
+various independent data marts.
+
+Difference between a data warehouse and an independent data marts :
++-----------------------------------------------------+---------------------------------------------------+
+| Data warehouse                                      | Independent data mart                             |
++-----------------------------------------------------+---------------------------------------------------+
+| Many sources (dozens or above maybe, might 50-100)  | one or more sources (typically up to 4-6 sources) |
++-----------------------------------------------------+---------------------------------------------------+
+| ETL from sources                                    | ETL from sources                                  |
++-----------------------------------------------------+---------------------------------------------------+
+| Probably large data volumes                         | Possibly large data volumes                       |
++-----------------------------------------------------+---------------------------------------------------+
+| Dimensionally organized data                        | Dimensionally organized data                      |
++-----------------------------------------------------+---------------------------------------------------+
+
+
+                                                            Data Warehousing 
+                                                                  +
+                                                                  |
+                                          +-----------------------+---------------------------+
+                                          |                                                   |
+                                     Centralized                                       Component Based
+                                          +                                                   +
+                                          |                                                   |
+                    +---------------------+-------------+                         +-----------+-------------+
+                    |                                   |                         |                         |
+                   EDW                             Data Lake                 Architected               Non-Architected
+                    +                                   +                         +                         |
+                    |                                   |                         |                         |
+           +--------+--------+ +-------------+----------+                +--------+----------+              |
+           |                 | |             |          |                |                   |              |
+        Relational        Specialized     Hadoop     others           DW+DMs                DMs only        |
+                           Database               (Ex-AWS S3..           +                   |              |
+                                                                         |                   |              |
+                                                                +--------+--------+          |              |
+                                                                |                 |          |              |
+                                                       Dependent DMs     Front-end DMs     DW bus       Federated EDW
+
+
+Cubes (MDBMS) : 
+==========================================
+relational database management systems RDBMS are typically the default platform for our data warehouses and data marts, 
+but also we've used cubes for a number of years as an alternative platform.
+Cube is definitely not a relational database management system.
+Instead, a cube or a multidimensional database is a specialized database that has inherent awareness
+of this idea and concept of dimensionality of its data contents.
+Cubes are still used today, but also they tend to be used primarily for smaller scale data warehouses
+and data marts rather than larger enterprise scale systems.
+When you use a multidimensional database or a cube, you do have some advantages, 
+     very fast query response time.
+     best for modest data volumes 
+disadvantage of cubes 
+     they are less flexible than when we use a relational database management system.
+Essentially, cubes give us fast performance for the queries and reports that I mentioned.
+therefore, what we often find today are data warehousing environments to take advantage of both relational databases and multidimensional databases or cubes.
+RDBMS + MDBMS : 
+1.  We could have the data warehouse built on top of a relational database management system platform, 
+    but each of the data mart is instead built on top of a cube.
+    Or 
+    maybe you have a mix and match architecture where one of your data marts is built on SQL Server or another relational database.
+    The other two data marts tend to be built on cubes.
+RDBMS + MDBMS it makes sense for your organization, a really powerful combination.
+
+ODS : 
+==========================================
+what exactly is an operational data store?
+Just like a data warehouse and ODS integrates data from multiple sources into a single place for one stop shopping.
+However, unlike a data warehouse and ODS focuses primarily on operational data rather than historical data.
+In fact, we often find real time data feeds from our source applications to ODS unlike the batch oriented ETL feeds of a data warehouse.
+
+This means that when transaction occurs, the data from that point of sale system is transmitted immediately to the ODS rather than 
+being queued up for the next data warehouse refresh.
+Remember that the idea of a data warehouse being time variant, that's an important part of data warehousing
+for a long time.
+ODS being used when business intelligence primary focus of an operational data store, not so much the past or the future
+through predictive analytics.ODS integrates current state of data from a number of different places.
+
+ODS - for operational decision making 
+DW  - for strategic decision making 
+So, when DW & ODS coexists, users went to either ODS or DW, depending upon whether their analytics and BI needs were strategic or operational.
+method 1 : 
+                    +----rapid ETL -----ODS-----+ (operational)
+                    |                           |
+     Data sources --+                           +---Decision making (users)
+                    |                           |
+                    +----batch ETL -----DW------+ (strategic)
+metod 2 : 
+
+     Data sources ----rapid ETL -----ODS-----batch ETL -----DW 
+                                      |                     |
+                       (operational)  +----------+----------+ (strategic)
+                                           Decision making 
+                    
+Operational data stores are less popular than they once were.
+One of the reasons is that we have faster and far more up to date current data warehouses with regards
+to the lack of latency or reduced latency in our data.
+The whole idea of time variance in a data data warehouse is definitely diminished from what it used
+to be in the earlier days.
+Also, a lot of ODS that have been superseded by big data technology.
+Remember, one of the three Vee's of big data is velocity.
+If we can blast data into a big data environment pretty much real time, then we can essentially do
+a lot of our operational analytics and operational business intelligence right out of a big data environment
+rather than an ODS.
+
+data warehouse layers : 
+===============================
+every data warehouse environment needs to have some sort of a staging layer.
+2 main layers of DW : 
+    1.staging layer
+    2.user access layer.
+    
+Importance of staging layer : 
+    --Landing zone
+        Staging layer is a landing zone for the incoming data from the source applications.
+        Remember, we don't create data for the first time in a data warehouse as part of some business transaction. 
+        Instead, that data is coming from elsewhere.
+    --"E" within ETL 
+        Therefore, the staging layer is a critical part of the overall E portion of ETL.
+        And remember, E stands for either extract or extraction.
+        What we're trying to do is get the data as quickly as possible from the source applications, 
+        especially, if those applications are very finely tuned environments that are built for very high transaction volumes.
+        Once we get the data into the data warehousing environment by virtue of the staging layer, that's where we can proceed with the integration 
+        and possibly the complex data transformations that we need to make before the data is available to support decision making.
+    --2 variations
+
+User Access layer : 
+    --this is where the users go.
+        from the user perspective, the user access layer really is the data warehouse or the data marts,since the same architecture applies to 
+        both the data warehouse or datamart.
+        So data warehouse really is synonymous with user access layer from the user perspective.
+    --dimensional data 
+        design engineering is for dimensional modeling would cover star schemas, snowflake schemas, fact tables and dimension tables and all the rest.
+        That all takes place in the user access layer because that's what the user see & pull data for their reports and BI and analytics.
+        
+                               +------------------------------------------------------+
+                               |                                                      |
+    Data sources -----ETL----> + --> Staging --- (transformation)--- User Access  <-- | <--- Decision making
+                               |     layer                           layer            |
+                               +------------------------------------------------------+
+                                                      DW
+The appropriate transformations and sort of finishing touches are made to the data to put it into the user access layer in a form that's ready to support the decision making.
+
+refer pdf for pic : 
+
+Now let's look inside the staging layer and understand how it works.
+Simple straightforward structure :
+    Let's say we have a university environments where we have a faculty system.
+    We'll focus on two different subject areas, only departments and faculty, the actual teachers as well as the departments that they belong to.
+    And then even more, for the sake of simplicity, let's just say that there's only one database table for each of these subjects, 
+    whereas in the real world, you normally find multiple tables for different pieces of the data related to faculty and departments.
+    But let's just keep it simple, because that gets the idea of the staging layer.
+    inside the staging layer, what we're going to do is create mirror images of what's coming out of the source application.
+    So again, our objective is to pull the data as quickly as possible and as non-intrusive (No manual interfere) as possible.
+    So the closer our staging layer data structures are to those of the source environment, the more straightforward that data flow is going to be.
+
+multi source architecture ( data from 2 campuses) (1 to 1 feeds): 
+    we're going to have two sets of staging tables, one for the East campus departments, one for the East campus faculty, and then equivalent tables 
+    for the West campus.
+    Then once we pull the data out of the staging area and we do those transformations & finishing touches that we mentioned.
+    We can still slice that up if we want to buy the different campuses, but basically integrate them together,
+    which is typically what we would do in the data warehouse.
+
+multi source architecture ( data from 2 campuses) (many(2) to 1 feeds): 
+    Why have a separate set of tables for faculty and a separate set of tables for departments for each of the campuses?
+    Why don't we integrate them together in staging layer?
+    And the answer is, you actually could do that if everything is aligned correctly for you.
+      (i.e) if you have identical software you would have identical systems in the East campus and the West campus, so, you could do that.
+    suppose we have different software or even the same software but it's customized differently in the East campus versus the West campus.
+    And that case you really need to go for one to one feeds, 
+    even though it might seem like you would want to integrate the departments and integrate the faculty together in the staging area.
+
+Remember, staging is not a real data. That's not where users go.
+This is only a temporary home, sort of a landing zone for the data coming out of the source applications.
+So in that case, you're better off with the one to one feeds.
+If you have relatively uniform data across your data marts & data warehouses, then sure, go ahead and do that.
+Otherwise, if you have different vendor applications for the same functions, then really you want to do more of the one to one feeds.
+Either way, you're ETL staging layer objective is to focus on the e - extraction rather than the transformation.
+What we want to do is push the transformation into the data warehousing environment, not have the source applications themselves 
+
+Two types of staging layers : 
+=================================
+we have a staging layer that serves as a landing zone for our incoming data, which is then transformed and integrated and loaded into the user access
+layer.
+Actually, database tables that bring us to two types of staging layers.
+    1. non persistent staging layers 
+    2. persistent staging layers.
+
+Non persistent staging layers  :
+-----------------------------------------
+First, remember that a data warehouse is continually updated and refreshed on a regular basis.
+1. staging layer is empty 
+    And prior to each update, if we have a non persistent staging layer, that staging layer would be empty.
+2. bring in new data to staging layer 
+    Suppose that we're bringing in a list of new faculty members that are joining the university at the beginning of the academic year.
+    The first thing we do is bring in all of the new data.
+    So you'll see here we have four different faculty members coming in through the faculty system 
+    and their information is brought into the staging layer where it's basically staged before it's finally loaded into the user access layer.
+3. add data into user access layer
+    You'll see that we had already some faculty data in the user access layer and we add the new four rows to that existing data.
+    now we all set at the user access layer 
+4. empty the staging layer 
+    Once user access layer is all set then we would delete the entries in staging (non-persistent)
+    If we have a non persistent staging layer, once we're done using data, there will be an erase.
+    
+1. staging layer is empty 
+    Once again, we have a brand new empty staging layer.
+2. bring in new data to staging layer 
+    the next time around we're bringing in two brand new faculty members.
+    we bring in the information for Assistant Professor Marcus and Professor Coleman.
+3. It makes its way into the staging layer, makes its way into the user access layer 
+4. And once everything's all set in the user access layer, we go ahead and we empty out the staging layer.
+           Data comes in there -> staged -> brought into the user access layer -> empty out the staging layer for the next time.
+
+Persistent staging layers :
+-----------------------------------------
+1. Staging layer is not empty 
+    we'll start off with the four new faculty members that are coming in at the beginning of a semester.
+    And you'll notice in this case in the staging layer, we didn't provide any details, but there's already
+    some data for faculty members sitting in the staging layer as well as in the user access layer.
+    So we bring in the information for Professors Johnson, Wilson, Tolleson and Zimmerman.
+    It makes its way into the staging layer, gets sent off into the user access layer, just like with a non persistent staging layer.
+    The difference is, we do not empty out the staging layer, Once we're done.
+2. bring in new data & append the data into staging layer 
+    we have professors Marcus and Kohlman, who are coming in to become brand new faculty members.
+    You'll notice in the staging layer we have all the data that was there previously.
+    We have the information sitting around for Professors Johnson, Wilson, Tolleson and Zimmerman, then
+    will go ahead, will bring in the data for Professors Marcus and Kohlman, will add it on to the stage layer, 
+    move it over or copy it over into the user access layer in the dimensional form that it's going to eventually wind up in.
+    And the data still stays around in the staging layer.

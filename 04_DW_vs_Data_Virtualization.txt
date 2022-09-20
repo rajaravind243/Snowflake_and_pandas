@@ -1,0 +1,57 @@
+Another discipline that is sometimes confused with data warehousing in addition to data lakes, is data virtualization.
+To understand data virtualization, we actually need to take a brief look back into the history of data warehousing.
+In the days before data warehousing came onto the scene, data driven decision making was largely done by building what we often called extract files 
+that were exactly as they sounded sort of like mini data warehouses, 
+pulling data from one or more applications, but without any coordination of data structures, rules or pretty much anything else.
+Far more time was spent gathering and reorganizing data over and over than actually analyzing data.
+
+In the late 1980s, most of the major computer systems, companies of the day were working on something called distributed database management systems.
+Think about an Internet search engine.
+But instead of building a monster sized index for websites and Web pages, the index would instead point to applications and their databases and specific data.
+In theory, a user would write queries against a distributed database regardless of how dispersed theactual data was.
+And the index would then reach out to the various places, pull in the correct data, organize it and
+present the result to the user without going into details.
+The idea of distributed databases was mostly a failure.
+
+The concept was a solid one and in fact, in some ways a distributed database is very much a earlier
+incarnation of how Hadoop works as a big data engine, with its data distributed among many underlying
+nodes.
+However, the technology of the late 1980s and even into the very early 1990s wasn't nearly powerful
+enough to support the distributed usage of data.
+The way we were trying to make it work, that led us to two divergent paths.
+
+One path took us into what became data warehousing.
+The idea was that if we can't reach out and grab data on demand in its original applications databases,
+let's preemptively pull what we think we need.
+And then, as we saw earlier, integrate copies of that data together into some sort of a totally separate environments.
+
+Data warehouse : 
+copying data again from source 
+not real time 
+
+data virtualization:
+  Read only DDBMS
+      At the same time, another school of thought wasn't happy with this idea of copying data and attempted to modify the idea of distributed databases 
+      into what is now known as data virtualization.
+      The key point for data virtualization is that unlike data warehousing, we do not copy the data into a separate database.
+      Instead, we access it from its original locations.At the time, we need to do so for reports and analytics.
+  In-place data access  
+      Essentially, data virtualization can be thought of as a read only distributed database versus the original
+      distributed database idea of not only reading the data, but also updating it in place via those indexes that we were building.
+  Many names over the years 
+      Data virtualization has actually had many names over the years for essentially the same concept, such as virtual data warehousing, enterprise 
+      information integration(EII), enterprise data access (EDA) 
+      And now most of the time we know it has data virtualization.
+
+The technology that we use for data virtualization has significantly improved from the late 1980s, in the early 1990s, which makes it much more 
+useful and successful than its earlier incarnations.
+Having said that, though, it's best to think of data virtualization as being particularly useful in certain use cases.
+
+Data virtualization use case : 
+  simple transformations
+      If we have data that require simple transformations or perhaps even know transformations to be used in BI and analytics, 
+  smaller number of data sources 
+      if we have only a handful of data sources 
+  relaxed response time 
+      if we  have some leeway on the response time to our queries and reports
+then data virtualization can be part of our overall portfolio, along with data warehousing and data links to help deliver data driven decision making through business intelligence and analytics.

@@ -1,0 +1,30 @@
+Data warehouse vs Data lake : 
+Data warehouse
+   A data warehouse is often built on top of a relational database such as Microsoft, SQL Server, Oracle or IBM DB2 
+   Relational databases are also used for transactional systems and applications, not just data warehousing.
+   So you can think of a relational database as a general purpose data management engine that's useful in various settings.
+   Sometimes we also build a data warehouse on top of a multidimensional database that's typically known as a cube.
+   (think of a cube as sort of a special purpose database, not just a relational one)
+
+Data Lake
+   In contrast, a data lake is built on top of some sort of big data environment rather than a traditional relational database.
+ 
+
+Data warehouse vs Big data difference : 3 V's
+1. Volume 
+   Volume is one of the traditional 3 V's of big data.
+   Big data and its usage in data lake helps us manage extremely large volumes of data larger than we typically would include even in the largest 
+   data warehouses.
+2. Velocity 
+   Big Data also supports very rapid intake of new and changed data much more rapidly than we typically do with traditional data warehousing.
+3. Variety.
+   Our traditional data warehouse is mostly work with structured data numbers, dates, shorter length character strings and similar data types, which 
+   big data easily supports.
+   along with that bigdata supports semi's structured data such as text messages, emails, blogs and complex documents, as well as unstructured data 
+   such as audio and video.
+Some people think of data lakes as the next generation of data warehousing, and there is some truth to that point of view.
+The 3 V's capabilities certainly open up possibilities not only for expanded data management, but likewise expanded decision making capabilities.
+At the same time, though most organizations still have very robust data warehousing environments, even as they invest in big data technology to build data lakes.
+In fact, 
+The standard relational database language SQL provides not only the backbone of traditional BI busines intelligence, but also could be layered on top of a big data environment.
+From a user perspective, traditional B.I can then be done against either a data warehouse or a data lake.
